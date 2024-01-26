@@ -1,6 +1,8 @@
 #pragma once
 #include "DX2DClasses/SceneManager.h"
 #include "DX2DClasses/Vector2.h"
+#include <vector>
+#include <list>
 
 namespace DX2DClasses
 {
@@ -18,7 +20,7 @@ namespace DX2DClasses
 		//색상정보가 설정된 객체 디버그도우미와 함께 사용한다.
 		CColorBrushPalettet* m_pColorBrushPalettet;
 
-		//게임이 필요한 이미지를 가져오는 객체
+		//게임이 필요한 이미지를 가져오는 객체	
 		CImage* m_pPlayerImage;
 		CImage* m_pOpossumImage;
 		CImage* m_pEagleImage;
@@ -28,6 +30,10 @@ namespace DX2DClasses
 
 		CImage* m_pItemEffectImage;
 		CImage* m_pDeathEffectImage;
+
+
+		CImage* m_pBackgroundImage;
+		CImage* m_pBulletImage;
 
 		//실제로 로드된 이미지를 토대로 애니메이션 및 변형을 수행한다.
 		//게임오브젝트는 실제복제된 객체도 포함도므로 더 많은게 일반적이다.
@@ -40,7 +46,13 @@ namespace DX2DClasses
 
 		CGameObject* m_pItemEffectObject;
 		CGameObject* m_pDeathEffectObject;
-		
+
+
+		CGameObject* m_pBackgroundObject;
+		CGameObject* m_pBulletObject01;
+		CGameObject* m_pBulletObject02;
+		CGameObject* m_pBulletObject03;
+
 	public:
 		CMoveSampleScene();
 		~CMoveSampleScene();

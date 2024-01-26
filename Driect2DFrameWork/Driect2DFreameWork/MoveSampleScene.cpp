@@ -25,6 +25,7 @@ CMoveSampleScene::~CMoveSampleScene()
 
 void CMoveSampleScene::Initialize(HWND hWnd, CDriect2DFramwork* pDX2DFramework)
 {
+
 	ID2D1HwndRenderTarget* pRenderTarget = CSingletonRenderTarget::GetRenderTarget();
 
 	m_pColorBrushPalettet = new CColorBrushPalettet();
@@ -64,6 +65,26 @@ void CMoveSampleScene::Initialize(HWND hWnd, CDriect2DFramwork* pDX2DFramework)
 	m_pDeathEffectImage->ManualLoadImage(hWnd, L"Images\\death%02d.png");
 	m_pDeathEffectObject = new CGameObject();
 	m_pDeathEffectObject->Initialize(m_pDeathEffectImage, true);
+
+
+	m_pBackgroundImage = new CImage(pDX2DFramework->GetD2DRenderTarget(), pDX2DFramework->GetImagingFactory(), 1);
+	m_pBackgroundImage->ManualLoadImage(hWnd, L"Images\\SpaceBackground.jpg");
+	/*m_pBackgroundObject = new CGameObject();
+	m_pBackgroundObject->Initialize(m_pBackgroundImage, false);*/
+
+	m_pBulletImage = new CImage(pDX2DFramework->GetD2DRenderTarget(), pDX2DFramework->GetImagingFactory(), 1);
+	m_pBulletImage->ManualLoadImage(hWnd, L"Images\\bullet00.png");
+	m_pBulletObject01 = new CGameObject();
+	m_pBulletObject01->Initialize(m_pBulletImage, true);
+	m_pBulletObject01->SetUseTrue();
+
+	m_pBulletObject02 = new CGameObject();
+	m_pBulletObject02->Initialize(m_pBulletImage, true);
+	m_pBulletObject02->SetUseTrue();
+
+	m_pBulletObject03 = new CGameObject();
+	m_pBulletObject03->Initialize(m_pBulletImage, true);
+	m_pBulletObject03->SetUseTrue();
 }
 
 void CMoveSampleScene::Release()
@@ -83,6 +104,10 @@ void CMoveSampleScene::Release()
 	m_pDeathEffectObject->Release();
 	delete m_pDeathEffectObject;
 
+	m_pBulletObject01->Release();
+	delete m_pBulletObject01;
+
+
 	delete m_pPlayerImage;
 	delete m_pOpossumImage;
 	delete m_pEagleImage;
@@ -90,6 +115,8 @@ void CMoveSampleScene::Release()
 	delete m_pGemImage;
 	delete m_pItemEffectImage;
 	delete m_pDeathEffectImage;
+	delete m_pBackgroundImage;
+
 
 	m_pColorBrushPalettet->Release();
 	delete m_pColorBrushPalettet;
@@ -97,32 +124,89 @@ void CMoveSampleScene::Release()
 
 void CMoveSampleScene::Update()
 {
-	static SVector2 vPlayerPos;
-	float fPlayerSpeed = 2;
+	// *** player 위치 설정, bullet 발사위치 설정
+	static SVector2 vPlayerPos(150,130);
+	static SVector2 vBulletFirePos(3000, 2600);
+	float fPlayerSpeed = 5;
 	float fOpossumSpeed = 3;
 	float fEangleSpeed = 5;
+	float fBulletSpeed = 100;
+	float fBulletReload = 3;
 	//벡터방식 연산보다는 효률적이다.
+	// *** 플레이어 이동을 제한
 	if (CInputManager::GetAsyncKeyStatePress(VK_RIGHT))
+	{
 		vPlayerPos.x += fPlayerSpeed; //vPlayerPos = vPlayerPos + SVector2::right() * fPlayerSpeed;
+		vBulletFirePos.x += fPlayerSpeed*20;
+		if (vPlayerPos.x >= 320)
+		{
+			vPlayerPos.x = 320;
+		}
+	}
 	if (CInputManager::GetAsyncKeyStatePress(VK_LEFT))
-		vPlayerPos = vPlayerPos + SVector2::left()* fPlayerSpeed;//vPlayerPos.x -= fPlayerSpeed;
-	if (CInputManager::GetAsyncKeyStatePress(VK_DOWN))
-		vPlayerPos = vPlayerPos + SVector2::down() * fPlayerSpeed;//vPlayerPos.y += fPlayerSpeed;
-	if (CInputManager::GetAsyncKeyStatePress(VK_UP))
-		vPlayerPos.y -= fPlayerSpeed;//vPlayerPos = vPlayerPos + SVector2::up() * fPlayerSpeed;
+	{
+		vPlayerPos = vPlayerPos + SVector2::left() * fPlayerSpeed;//vPlayerPos.x -= fPlayerSpeed;
+		vBulletFirePos = vBulletFirePos + SVector2::left() * fPlayerSpeed*20;
+		if (vPlayerPos.x <= 0)
+		{
+			vPlayerPos.x = 0;
+		}
+	}
+	//if (CInputManager::GetAsyncKeyStatePress(VK_DOWN))
+	//	vPlayerPos = vPlayerPos + SVector2::down() * fPlayerSpeed;//vPlayerPos.y += fPlayerSpeed;
+	//if (CInputManager::GetAsyncKeyStatePress(VK_UP))
+	//	vPlayerPos.y -= fPlayerSpeed;//vPlayerPos = vPlayerPos + SVector2::up() * fPlayerSpeed;
 
 	static float fAngle = 0;
 	{
 		CTransform& cTrnasform = m_pPlayerObject->GetTransform();
 		SVector2 vSize = m_pPlayerObject->GetImage()->GetImageSize();
-		SVector2 vScale(1, 1);
+		SVector2 vScale(4, 4);
 		cTrnasform.SetTransrate(vPlayerPos);
 		SVector2 vAsix = vSize * 0.5f;
 		cTrnasform.SetAsixPoint(vAsix);
 		cTrnasform.SetTRS(vPlayerPos, fAngle, vScale);
 	}
-	fAngle+=10;
 	m_pPlayerObject->Update();
+	
+	// ==================bullet 컨트롤=========================
+	SVector2 vBulletScale(0.2f, 0.2f);
+	static SVector2 vBulletPos(vBulletFirePos.x , 2600);
+	{
+		CTransform& cTrnasform = m_pBulletObject01->GetTransform();
+		SVector2 vSize = m_pBulletObject01->GetImage()->GetImageSize();
+		SVector2 vScale(vBulletScale);
+		cTrnasform.SetTransrate(vBulletPos);
+		//m_pBulletObject->SetVector(vBulletPos, vBulletScale);
+		/*SVector2 vAsix = vSize * 0.5f;
+		cTrnasform.SetAsixPoint(vAsix);*/
+		cTrnasform.SetTRS(vBulletPos, 0, vScale);
+		m_pBulletObject01->SetUseFalse();
+	}
+	vBulletPos = vBulletPos + SVector2::up() * fBulletSpeed;
+		m_pBulletObject01->Update();
+
+	//SVector2 vBulletScale(0.2f, 0.2f);
+	//SVector2 vBulletPos(vBulletFirePos);
+	//if (m_pBulletObject01->GetUse() == true)
+	//{
+	//	CTransform& cTrnasform = m_pBulletObject01->GetTransform();
+	//	SVector2 vSize = m_pBulletObject01->GetImage()->GetImageSize();
+	//	SVector2 vScale(vBulletScale);
+	//	cTrnasform.SetTransrate(vBulletPos);
+	//	//m_pBulletObject->SetVector(vBulletPos, vBulletScale);
+	//	/*SVector2 vAsix = vSize * 0.5f;
+	//	cTrnasform.SetAsixPoint(vAsix);*/
+	//	cTrnasform.SetTRS(vBulletFirePos, 0, vScale);
+	//	m_pBulletObject01->SetUseFalse();
+	//}
+	//else
+	//{
+	//	vBulletFirePos = vBulletFirePos + SVector2::up() * fBulletSpeed;
+	//	if (vBulletPos.y <= 0) m_pBulletObject01->SetUseTrue();
+	//	m_pBulletObject01->Update();
+	//}
+	// ======================================================
 
 	static SVector2 vOpossumPos(1000, 0);
 	{
@@ -154,6 +238,9 @@ void CMoveSampleScene::Update()
 	}
 	m_pEagleObject->Update();
 
+
+
+	//m_pBackgroundObject->GetTransform().SetTransrate(50, 50);
 	m_pCherryObject->Update();
 	m_pCherryObject->GetTransform().SetTransrate(0, 50);
 	m_pGemObject->Update();
@@ -167,7 +254,15 @@ void CMoveSampleScene::Update()
 void CMoveSampleScene::Draw()
 {
 	ID2D1HwndRenderTarget* pRenderTarget = CSingletonRenderTarget::GetRenderTarget();
-	
+
+	SVector2 vBackgroundScale(1.4f, 1.3f);
+	SVector2 vBackgroundPos(00, 00);
+	m_pBackgroundImage->DrawBitmap(vBackgroundPos, vBackgroundScale, 0, 0);
+
+	m_pBulletObject01->Draw();
+	m_pBulletObject02->Draw();
+	m_pBulletObject03->Draw();
+
 	m_pPlayerObject->Draw();
 
 	m_pOpossumObject->Draw();
@@ -179,4 +274,5 @@ void CMoveSampleScene::Draw()
 
 	m_pItemEffectObject->Draw();
 	m_pDeathEffectObject->Draw();
+
 }

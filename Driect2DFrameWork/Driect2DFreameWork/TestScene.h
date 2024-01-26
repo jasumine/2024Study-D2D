@@ -24,14 +24,13 @@ namespace DX2DClasses
 		CImage* m_pGem;
 		CImage* m_pItemEffect;
 		CImage* m_pDeathEffect;
-		CImage* backgroundImage;
 
 		CGameObject* m_pPlayerObject;
 		CGameObject* m_pOpossumObject;
 		CGameObject* m_pEagleObject;
 		CGameObject* m_pCherryObject;
 		CGameObject* m_pGemObject;
-
+		
 		CGameObject* m_pItemEffectObject;
 		CGameObject* m_pDeathEffectObject;
 

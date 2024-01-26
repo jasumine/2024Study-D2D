@@ -162,6 +162,6 @@ void CGameObject::Update()
 }
 void CGameObject::Draw()
 {
-	if(m_isActive)
+	if (m_isActive)
 		m_pAnimator->DrawImage(m_pImage, m_cTransform);
 }

@@ -24,7 +24,7 @@ CTestScene::CTestScene()
 
 CTestScene::~CTestScene()
 {
-	//Release();
+	Release();
 }
 
 void CTestScene::Initialize(HWND hWnd, CDriect2DFramwork* pDX2DFramework)
@@ -60,10 +60,6 @@ void CTestScene::Initialize(HWND hWnd, CDriect2DFramwork* pDX2DFramework)
 
 	m_pOpossumObject = new CGameObject();
 	m_pOpossumObject->Initialize(m_pOpossum, true);
-
-	backgroundImage = new CImage(pDX2DFramework->GetD2DRenderTarget(), pDX2DFramework->GetImagingFactory(), 0);
-	backgroundImage->ManualLoadImage(hWnd, L"Images\\SpaceBackground.jpg");
-	std::cout << "배경이미지 생성" << endl;
 
 	MatrixTest();
 }
@@ -138,6 +134,10 @@ void CTestScene::Draw()
 	m_pPlayerObject->Draw();
 	m_pOpossum->DrawBitmap(SVector2(), vScale, 0, 0);
 	m_pOpossumObject->Draw();
+	
+	
+
+
 
 	cAnimator.UpdateFrame();
 	

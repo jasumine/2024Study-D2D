@@ -1,3 +1,2 @@
-﻿  TestScene.cpp
-C:\Users\Administrator\Desktop\수업내용\DX\Direct2DFrameWork-main\Direct2DFrameWork-main\Driect2DFrameWork\Driect2DFreameWork\TestScene.cpp(287,46): warning C4305: '인수': 'double'에서 'float'(으)로 잘립니다.
-  Driect2DFreameWork.vcxproj -> C:\Users\Administrator\Desktop\수업내용\DX\Direct2DFrameWork-main\Direct2DFrameWork-main\Driect2DFrameWork\x64\Debug\Driect2DFreameWork.exe
+﻿  MoveSampleScene.cpp
+  Driect2DFreameWork.vcxproj -> C:\Users\Administrator\Desktop\수업내용\DX\Direct2DFrameWork-main\Direct2DFrameWork-main\D2D\Driect2DFrameWork\x64\Debug\Driect2DFreameWork.exe

@@ -53,7 +53,9 @@ void CDriect2DFramwork::_InitializeRect(HWND hWnd, ID2D1HwndRenderTarget* &pRend
 	RECT rc;
 	GetClientRect(hWnd, &rc);
 
+	// window size Á¶Àý
 	D2D1_RENDER_TARGET_PROPERTIES dxRTProperties = D2D1::RenderTargetProperties();
+	/*D2D1_SIZE_U dxSize = D2D1::SizeU(rc.right - rc.left, rc.bottom - rc.top);*/
 	D2D1_SIZE_U dxSize = D2D1::SizeU(rc.right - rc.left, rc.bottom - rc.top);
 
 	hr = m_pD2DFactory->CreateHwndRenderTarget(dxRTProperties, D2D1::HwndRenderTargetProperties(hWnd, dxSize), &pRenderTaget);

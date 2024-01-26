@@ -125,7 +125,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Background.cpp" />
+    <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="CollisionTestScene.cpp" />
     <ClCompile Include="DX2DClasses\Colliders.cpp" />
     <ClCompile Include="DX2DClasses\CollisionCheck.cpp" />
@@ -146,7 +146,7 @@
     <ClCompile Include="stdafx.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Background.h" />
+    <ClInclude Include="Bullet.h" />
     <ClInclude Include="CollisionTestScene.h" />
     <ClInclude Include="DX2DClasses\Colliders.h" />
     <ClInclude Include="DX2DClasses\CollisionCheck.h" />

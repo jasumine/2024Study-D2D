@@ -13,6 +13,7 @@ namespace DX2DClasses
 	class CColorBrush;
 	class CColorBrushPalettet;
 	class CGameObject;
+
 	class CCircleCollider;
 	class CRectCollider;
 	class CBoxCollider;

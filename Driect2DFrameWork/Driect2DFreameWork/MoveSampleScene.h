@@ -1,8 +1,9 @@
 #pragma once
 #include "DX2DClasses/SceneManager.h"
 #include "DX2DClasses/Vector2.h"
-#include <vector>
-#include <list>
+#include <queue>
+
+using namespace std;
 
 namespace DX2DClasses
 {
@@ -14,6 +15,10 @@ namespace DX2DClasses
 	class CColorBrush;
 	class CColorBrushPalettet;
 	class CGameObject;
+
+	class CCircleCollider;
+	class CRectCollider;
+	class CBoxCollider;
 
 	class CMoveSampleScene : public ISceneManager
 	{
@@ -53,6 +58,27 @@ namespace DX2DClasses
 		CGameObject* m_pBulletObject02;
 		CGameObject* m_pBulletObject03;
 
+		CGameObject* m_pBulletObject04;
+		CGameObject* m_pBulletObject05;
+		CGameObject* m_pBulletObject06;
+
+		queue<CGameObject*> m_qBulletUse;
+		queue<CGameObject*> m_qBulletUnUse;
+
+
+		CBoxCollider* m_pPlayerBoxCollider;
+		CRectCollider* m_pPlayerRectCollider;
+		CCircleCollider* m_pPlayerCircleCollider;
+
+		CBoxCollider* m_pOpossumBoxCollider;
+		CRectCollider* m_pOpossumRectCollider;
+
+		CCircleCollider* m_pEagleCircleCollider;
+
+		CBoxCollider* m_pBullet01BoxCollider;
+		CRectCollider* m_pBullet01RectCollider;
+
+
 	public:
 		CMoveSampleScene();
 		~CMoveSampleScene();
@@ -62,5 +88,13 @@ namespace DX2DClasses
 
 		void Update() override; //정보변경
 		void Draw() override; //객체 그리기
+
+	public:
+		bool m_isColPlayerToPossum;
+		bool m_isColplayerToEagle;
+
+		void BulletCreate(SVector2);
+		void CollisionCheckDraw();
+		void ColliderDraw();
 	};
 }

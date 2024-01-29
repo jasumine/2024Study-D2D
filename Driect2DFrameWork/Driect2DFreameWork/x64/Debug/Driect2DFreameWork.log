@@ -1,2 +1,3 @@
 ﻿  MoveSampleScene.cpp
+C:\Users\Administrator\Desktop\수업내용\DX\Direct2DFrameWork-main\Direct2DFrameWork-main\D2D\Driect2DFrameWork\Driect2DFreameWork\MoveSampleScene.cpp(264,18): warning C4101: 'collision' :참조되지 않은 지역 변수입니다.
   Driect2DFreameWork.vcxproj -> C:\Users\Administrator\Desktop\수업내용\DX\Direct2DFrameWork-main\Direct2DFrameWork-main\D2D\Driect2DFrameWork\x64\Debug\Driect2DFreameWork.exe

@@ -57,8 +57,6 @@ namespace DX2DClasses
 		CAnimator2D* m_pAnimator = NULL;
 		CImage* m_pImage = NULL;
 		bool m_isActive;
-
-		bool m_isUse;
 	public:
 		CTransform& GetTransform();
 		void SetImage(CImage* img);
@@ -67,9 +65,6 @@ namespace DX2DClasses
 		void SetActive(bool use) { m_isActive = use; };
 		bool GetActive() { return m_isActive; };
 
-		void SetUseTrue() { m_isUse = true; };
-		void SetUseFalse() { m_isUse = false; };
-		bool GetUse() { return m_isUse; };
 	public:
 		CGameObject();
 
